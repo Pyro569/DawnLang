@@ -1,4 +1,3 @@
-# DawnLang
 # What is DawnLang?  
 DawnLang (Dawn for short) is a cool programming language!   
 # Why is it called DawnLang?  
