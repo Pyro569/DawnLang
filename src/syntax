@@ -9,3 +9,7 @@ math operations:
 console operations:
     write(string stringToWrite)
 
+variable initilization:
+    VAR a = 10
+    String b = "DawnLang"    
+
