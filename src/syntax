@@ -1,0 +1,11 @@
+math operations:
+    sqr(int), squares number
+    pow(int numSquare, int power)
+    div(int original, int divisor)
+    multi(int original, int multiplicitor)
+    sub(int original, int subtractor)
+    add(int original, int addedInt)
+
+console operations:
+    write(string stringToWrite)
+
