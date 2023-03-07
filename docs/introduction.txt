@@ -1,7 +1,7 @@
 Welcome to the DawnLang docs! These docs are a work in progress and will most likely almost always be a work in progress, so please be patient if a section is outdated or incorrect.
 
 TABLE OF CONTENTS:
-BASICS
-MATH
-INT
-IF/DO
+    BASICS
+        MATH
+        INT
+        IF/DO
