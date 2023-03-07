@@ -1,0 +1,22 @@
+An IF/DO statement is a special type of statement that allows certain code to be ran only in certain circumstances.
+Example:
+    DawnLang > INT apples = 19
+    19
+    DawnLang > IF apples == 19 DO INT apples = 18 
+    18
+
+    DawnLang > INT apples == 12
+    12
+    DawnLang > IF apples == 19 DO INT apples = 18 ELSE INT apples = 21 
+    21
+
+Breakdown:
+    DawnLang > INT apples = 19 //initialize INT named apples with a value of 19
+    19
+    DawnLang > IF apples == 19 DO INT apples = 18 //if apples is equal to 19, then apples is equal to 18
+    18
+
+    DawnLang > INT apples == 12 //initialize INT named apples with a value of 12
+    12
+    DawnLang > IF apples == 19 DO INT apples = 18 ELSE INT apples = 21 //if apples is equal to 19, then apples is equal to 18, but if apples is not equal to 19, apples is equal to 21
+    21

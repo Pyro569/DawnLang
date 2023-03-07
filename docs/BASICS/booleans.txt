@@ -1,0 +1,23 @@
+A boolean is a data type structure that equates to true or false. 
+For example, if I have the boolean isWorking and it defaults to false at the beginning of the program, isWorking will have a value of 0, meaning it is false, but once the value is set to true, the value will be 1, signifying true.
+Example:
+    DawnLang > INT apples = 12
+    12
+    DawnLang > apples == 19
+    0
+
+    DawnLang > INT apples == 19
+    19
+    DawnLang > apples == 19
+    1
+
+Breakdown:
+    DawnLang > INT apples = 12 //initialize INT named apples with a value of 12
+    12
+    DawnLang > apples == 19 //check if apples is equal to 19
+    0 //apples is not equal to 19, print 0 in return
+
+    DawnLang > INT apples = 19 //initialize INT named apples with a value of 19
+    19
+    DawnLang > apples == 19 //check if apples is equal to 19
+    1 //apples is equal to 19, print 1 in return
