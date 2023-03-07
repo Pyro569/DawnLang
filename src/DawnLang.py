@@ -115,12 +115,12 @@ TT_GTE = 'GTE'
 TT_EOF = 'EOF'
 
 KEYWORDS = [
-    'VAR',
+    'INT',
     'AND',
     'OR',
     'NOT',
     'IF',
-    'THEN',
+    'DO',
     'ELIF',
     'ELSE'
 ]
@@ -421,10 +421,10 @@ class Parser:
         if res.error:
             return res
 
-        if not self.current_tok.matches(TT_KEYWORD, 'THEN'):
+        if not self.current_tok.matches(TT_KEYWORD, 'DO'):
             return res.failure(InvalidSyntaxError(
                 self.current_tok.pos_start, self.current_tok.pos_end,
-                f"Expected 'THEN'"
+                f"Expected 'DO'"
             ))
 
         res.register_advancement()
@@ -443,10 +443,10 @@ class Parser:
             if res.error:
                 return res
 
-            if not self.current_tok.matches(TT_KEYWORD, 'THEN'):
+            if not self.current_tok.matches(TT_KEYWORD, 'DO'):
                 return res.failure(InvalidSyntaxError(
                     self.current_tok.pos_start, self.current_tok.pos_end,
-                    f"Expected 'THEN'"
+                    f"Expected 'DO'"
                 ))
 
             res.register_advancement()
@@ -558,7 +558,7 @@ class Parser:
     def expr(self):
         res = ParseResult()
 
-        if self.current_tok.matches(TT_KEYWORD, 'VAR'):
+        if self.current_tok.matches(TT_KEYWORD, 'INT'):
             res.register_advancement()
             self.advance()
 
@@ -591,7 +591,7 @@ class Parser:
         if res.error:
             return res.failure(InvalidSyntaxError(
                 self.current_tok.pos_start, self.current_tok.pos_end,
-                "Expected 'VAR', int, float, identifier, '+', '-', '(' or 'NOT'"
+                "Expected 'INT', int, float, identifier, '+', '-', '(' or 'NOT'"
             ))
 
         return res.success(node)

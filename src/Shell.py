@@ -1,5 +1,4 @@
 import DawnLang
-import readline
 
 while True:
     command = input('DawnLang > ')
