@@ -1,0 +1,14 @@
+An INT in DawnLang is a 32 bit integer, an INT can be used for many purposes such as storing a number for later or math operations.
+Example:
+DawnLang > INT apples = 32
+32
+DawnLang > INT oranges = apples / 2
+16
+
+Breakdown:
+DawnLang > INT apples = 32 //initiliaze an INT named apples with a value of 32
+32
+DawnLang > INT oranges = apples / 2 //initialize an INT named oranges with a value of half of apples
+16
+DawnLang > apples / oranges //divide the amount of apples by oranges
+2
