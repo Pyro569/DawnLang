@@ -6,3 +6,5 @@ TABLE OF CONTENTS:
         INT
         BOOLEANS
         IF/DO
+        FOR/WHILE
+        FUNCTIONS

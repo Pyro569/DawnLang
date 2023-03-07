@@ -1,0 +1,12 @@
+A function is a set of code that you can easily call repeatedly, a function can also allow you to use parameters to use these parameters for operations
+Example:
+    DawnLang > FUNCTION add (a, b) -> a + b
+    <function add>
+    DawnLang > add(9, 10)
+    19
+
+Breakdown:
+    DawnLang > FUNCTION add (a, b) -> a + b //make a function named add that uses the arguments a and b, which then adds a and b together
+    <function add>
+    DawnLang > add(9, 10) //call add on the numbers 9 and 10
+    19 //output the result of calling add with (9, 10)
