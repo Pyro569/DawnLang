@@ -1,0 +1,1 @@
+pyinstaller ./src/DawnLang.py ./src/strings_with_arrows.py --onefile

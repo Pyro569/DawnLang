@@ -1531,6 +1531,13 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.null)
     execute_stop.arg_names = []
 
+    def execute_shellrun(self, exec_ctx):
+        args = exec_ctx.symbol_table.get("args")
+
+        os.system(str(args))
+        return RTResult().success(Number.null)
+    execute_shellrun.arg_names = ["args"]
+
 
 BuiltInFunction.write = BuiltInFunction("write")
 BuiltInFunction.writeret = BuiltInFunction("writeret")
@@ -1546,6 +1553,7 @@ BuiltInFunction.pop = BuiltInFunction("pop")
 BuiltInFunction.extend = BuiltInFunction("extend")
 BuiltInFunction.convertint = BuiltInFunction("convertint")
 BuiltInFunction.stop = BuiltInFunction("stop")
+BuiltInFunction.shellrun = BuiltInFunction("shellrun")
 # CONTEXT
 
 
@@ -1820,6 +1828,7 @@ global_symbol_table.set("pop", BuiltInFunction.pop)
 global_symbol_table.set("extend", BuiltInFunction.extend)
 global_symbol_table.set("convertint", BuiltInFunction.convertint)
 global_symbol_table.set("stop", BuiltInFunction.stop)
+global_symbol_table.set("shellrun", BuiltInFunction.shellrun)
 
 
 def run(fn, text):
