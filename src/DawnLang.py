@@ -1513,6 +1513,17 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.null)
     execute_extend.arg_names = ["listA", "listB"]
 
+    def execute_convertint(self, exec_ctx):
+        intConvert = exec_ctx.symbol_table.get("intConvert")
+
+        if not isinstance(exec_ctx.symbol_table.get("value"), String):
+            return RTResult().failure(RTError(self.pos_start, self.pos_end, "First argument must be string", exec_ctx))
+        
+        str(intConvert)
+        element = int(intConvert)
+        return RTResult().success(element)
+    execute_convertint.arg_names = ["value"]
+
 
 BuiltInFunction.write = BuiltInFunction("write")
 BuiltInFunction.write.ret = BuiltInFunction("write.ret")
@@ -1526,6 +1537,7 @@ BuiltInFunction.isfunction = BuiltInFunction("isfunction")
 BuiltInFunction.append = BuiltInFunction("append")
 BuiltInFunction.pop = BuiltInFunction("pop")
 BuiltInFunction.extend = BuiltInFunction("extend")
+BuiltInFunction.convertint = BuiltInFunction("convertint")
 # CONTEXT
 
 
@@ -1785,9 +1797,9 @@ global_symbol_table.set("FALSE", Number.false)
 global_symbol_table.set("TRUE", Number.true)
 global_symbol_table.set("MATH_PI", Number.math_PI)
 global_symbol_table.set("write", BuiltInFunction.write)
-global_symbol_table.set("write.ret", BuiltInFunction.write.ret)
+global_symbol_table.set("writeret", BuiltInFunction.write.ret)
 global_symbol_table.set("input", BuiltInFunction.input)
-global_symbol_table.set("input.int", BuiltInFunction.input.int)
+global_symbol_table.set("inputint", BuiltInFunction.input.int)
 global_symbol_table.set("clear", BuiltInFunction.clear)
 global_symbol_table.set("cls", BuiltInFunction.clear)
 global_symbol_table.set("isnumber", BuiltInFunction.isnumber)
@@ -1797,6 +1809,7 @@ global_symbol_table.set("isfunction", BuiltInFunction.isfunction)
 global_symbol_table.set("append", BuiltInFunction.append)
 global_symbol_table.set("pop", BuiltInFunction.pop)
 global_symbol_table.set("extend", BuiltInFunction.extend)
+global_symbol_table.set("convertint", BuiltInFunction.convertint)
 
 
 def run(fn, text):
