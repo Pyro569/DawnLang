@@ -2,19 +2,19 @@ A for loop is a special type of loop that will repeat a process until a certain 
 A while loop is just like a for loop in that it will repeat until a condition is met.
 
 Example:
-    DawnLang > INT i = 0
+    DawnLang > VAR i = 0
     0
-    DawnLang > FOR i = 1 TO 6 DO INT b = i + 1
+    DawnLang > FOR i = 1 TO 6 DO VAR b = i + 1
     DawnLang > b
     6 
 
-    DawnLang > INT i = 0
+    DawnLang > VAR i = 0
     0
-    DawnLang > WHILE i < 100 DO INT i = i + 1
+    DawnLang > WHILE i < 100 DO VAR i = i + 1
 
 Breakdown:
-    DawnLang > INT i = 0 //initialize a INT named i with value of 0
+    DawnLang > VAR i = 0 //initialize a VAR named i with value of 0
     0
-    DawnLang > FOR i = 1 TO 6 DO INT b = i + 1 //Start at 1, continue until 6 (exclusive), each run of code INT b is set as i + 1
+    DawnLang > FOR i = 1 TO 6 DO VAR b = i + 1 //Start at 1, continue until 6 (exclusive), each run of code VAR b is set as i + 1
     DawnLang > b
     6 

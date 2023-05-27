@@ -1519,7 +1519,7 @@ class BuiltInFunction(BaseFunction):
         if not isinstance(exec_ctx.symbol_table.get("value"), String):
             return RTResult().failure(RTError(self.pos_start, self.pos_end, "First argument must be string", exec_ctx))
         
-        str(intConvert)
+
         element = int(intConvert)
         return RTResult().success(element)
     execute_convertint.arg_names = ["value"]
