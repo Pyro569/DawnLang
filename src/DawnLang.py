@@ -1430,16 +1430,16 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.empty)
     execute_write.arg_names = ["value"]
 
-    def execute_write_ret(self, exec_ctx):
+    def execute_writeret(self, exec_ctx):
         return RTResult().success(String(str(exec_ctx.symbol_table.get('value'))))
-    execute_write.arg_names = ["value"]
+    execute_writeret.arg_names = ["value"]
 
     def execute_input(self, exec_ctx):
         text = input()
         return RTResult().success(String(text))
     execute_input.arg_names = []
 
-    def execute_input_int(self, exec_ctx):
+    def execute_inputint(self, exec_ctx):
         while True:
             text = input()
             try:
@@ -1448,11 +1448,11 @@ class BuiltInFunction(BaseFunction):
             except ValueError:
                 print(f"'{text}' must be an integer. Try again!")
         return RTResult().success(Number(number))
-    execute_input_int.arg_names = []
+    execute_inputint.arg_names = []
 
     def execute_clear(self, exec_ctx):
         os.system('cls' if os.name == 'nt' else 'clear')
-        return  RTResult().success(Number.null)
+        return RTResult().success(Number.null)
     execute_clear.arg_names = []
 
     def execute_isnumber(self, exec_ctx):
@@ -1533,9 +1533,9 @@ class BuiltInFunction(BaseFunction):
 
 
 BuiltInFunction.write = BuiltInFunction("write")
-BuiltInFunction.write.ret = BuiltInFunction("write.ret")
+BuiltInFunction.writeret = BuiltInFunction("writeret")
 BuiltInFunction.input = BuiltInFunction("input")
-BuiltInFunction.input.int = BuiltInFunction("input.int")
+BuiltInFunction.inputint = BuiltInFunction("inputint")
 BuiltInFunction.clear = BuiltInFunction("clear")
 BuiltInFunction.isnumber = BuiltInFunction("isnumber")
 BuiltInFunction.isstring = BuiltInFunction("isstring")
@@ -1806,9 +1806,9 @@ global_symbol_table.set("TRUE", Number.true)
 global_symbol_table.set("EMPTY", Number.empty)
 global_symbol_table.set("MATH_PI", Number.math_PI)
 global_symbol_table.set("write", BuiltInFunction.write)
-global_symbol_table.set("writeret", BuiltInFunction.write.ret)
+global_symbol_table.set("writeret", BuiltInFunction.writeret)
 global_symbol_table.set("input", BuiltInFunction.input)
-global_symbol_table.set("inputint", BuiltInFunction.input.int)
+global_symbol_table.set("inputint", BuiltInFunction.inputint)
 global_symbol_table.set("clear", BuiltInFunction.clear)
 global_symbol_table.set("cls", BuiltInFunction.clear)
 global_symbol_table.set("isnumber", BuiltInFunction.isnumber)
