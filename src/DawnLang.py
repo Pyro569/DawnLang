@@ -4,6 +4,7 @@ import string
 import os
 import math
 import sys
+import random
 
 # CONSTANTS
 
@@ -1528,15 +1529,23 @@ class BuiltInFunction(BaseFunction):
 
     def execute_stop(self, exec_ctx):
         sys.exit()
-        return RTResult().success(Number.null)
     execute_stop.arg_names = []
 
     def execute_shellrun(self, exec_ctx):
         args = exec_ctx.symbol_table.get("args")
 
         os.system(str(args))
-        return RTResult().success(Number.null)
+        return RTResult().success(Number.empty)
     execute_shellrun.arg_names = ["args"]
+
+    def execute_random(self, exec_ctx):
+        low = exec_ctx.symbol_table.get("low")
+        high = exec_ctx.symbol_table.get("high")
+
+        element = random.randint(int(str(low)), int(str(high)))
+        print((element),end="\r")
+        return RTResult().success(Number.empty)
+    execute_random.arg_names = ["low", "high"]
 
 
 BuiltInFunction.write = BuiltInFunction("write")
@@ -1554,6 +1563,7 @@ BuiltInFunction.extend = BuiltInFunction("extend")
 BuiltInFunction.convertint = BuiltInFunction("convertint")
 BuiltInFunction.stop = BuiltInFunction("stop")
 BuiltInFunction.shellrun = BuiltInFunction("shellrun")
+BuiltInFunction.random = BuiltInFunction("random")
 # CONTEXT
 
 
@@ -1829,6 +1839,7 @@ global_symbol_table.set("extend", BuiltInFunction.extend)
 global_symbol_table.set("convertint", BuiltInFunction.convertint)
 global_symbol_table.set("stop", BuiltInFunction.stop)
 global_symbol_table.set("shellrun", BuiltInFunction.shellrun)
+global_symbol_table.set("random", BuiltInFunction.random)
 
 
 def run(fn, text):
