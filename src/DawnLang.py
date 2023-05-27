@@ -3,6 +3,7 @@ from strings_with_arrows import *
 import string
 import os
 import math
+import sys
 
 # CONSTANTS
 
@@ -1231,6 +1232,7 @@ class Number(Value):
 Number.null = Number(0)
 Number.false = Number(0)
 Number.true = Number(1)
+Number.empty = Number("")
 Number.math_PI = Number(math.pi)
     
 class String(Value):
@@ -1424,8 +1426,8 @@ class BuiltInFunction(BaseFunction):
         return f"<function {self.name}> "
     
     def execute_write(self, exec_ctx):
-        print(str(exec_ctx.symbol_table.get('value')))
-        return RTResult().success(Number.null)
+        print(str(exec_ctx.symbol_table.get('value')),end="\r")
+        return RTResult().success(Number.empty)
     execute_write.arg_names = ["value"]
 
     def execute_write_ret(self, exec_ctx):
@@ -1524,6 +1526,11 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(element)
     execute_convertint.arg_names = ["value"]
 
+    def execute_stop(self, exec_ctx):
+        sys.exit()
+        return RTResult().success(Number.null)
+    execute_stop.arg_names = []
+
 
 BuiltInFunction.write = BuiltInFunction("write")
 BuiltInFunction.write.ret = BuiltInFunction("write.ret")
@@ -1538,6 +1545,7 @@ BuiltInFunction.append = BuiltInFunction("append")
 BuiltInFunction.pop = BuiltInFunction("pop")
 BuiltInFunction.extend = BuiltInFunction("extend")
 BuiltInFunction.convertint = BuiltInFunction("convertint")
+BuiltInFunction.stop = BuiltInFunction("stop")
 # CONTEXT
 
 
@@ -1795,6 +1803,7 @@ global_symbol_table = SymbolTable()
 global_symbol_table.set("NULL", Number.null)
 global_symbol_table.set("FALSE", Number.false)
 global_symbol_table.set("TRUE", Number.true)
+global_symbol_table.set("EMPTY", Number.empty)
 global_symbol_table.set("MATH_PI", Number.math_PI)
 global_symbol_table.set("write", BuiltInFunction.write)
 global_symbol_table.set("writeret", BuiltInFunction.write.ret)
@@ -1810,6 +1819,7 @@ global_symbol_table.set("append", BuiltInFunction.append)
 global_symbol_table.set("pop", BuiltInFunction.pop)
 global_symbol_table.set("extend", BuiltInFunction.extend)
 global_symbol_table.set("convertint", BuiltInFunction.convertint)
+global_symbol_table.set("stop", BuiltInFunction.stop)
 
 
 def run(fn, text):
@@ -1832,3 +1842,12 @@ def run(fn, text):
     result = interpreter.visit(ast.node, context)
 
     return result.value, result.error
+
+while True:
+    command = input('DawnLang > ')
+    result, error = run('<stdin>', command)
+
+    if error:
+        print(error.as_string())
+    elif result:
+        print(repr(result))
