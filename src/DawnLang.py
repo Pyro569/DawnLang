@@ -1588,6 +1588,11 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.empty)
     execute_emoquote.arg_names = []
 
+    def execute_version(self, exec_ctx):
+        print(("DawnLang V0.5"),end="\r")
+        return RTResult().success(Number.empty)
+    execute_version.arg_names = []
+
 BuiltInFunction.write = BuiltInFunction("write")
 BuiltInFunction.writeret = BuiltInFunction("writeret")
 BuiltInFunction.input = BuiltInFunction("input")
@@ -1610,6 +1615,7 @@ BuiltInFunction.reboot = BuiltInFunction("reboot")
 BuiltInFunction.createfile = BuiltInFunction("createfile")
 BuiltInFunction.writefile = BuiltInFunction("writefile")
 BuiltInFunction.emoquote = BuiltInFunction("emoquote")
+BuiltInFunction.version = BuiltInFunction("version")
 # CONTEXT
 
 
@@ -1892,6 +1898,7 @@ global_symbol_table.set("shutdown", BuiltInFunction.shutdown)
 global_symbol_table.set("createfile", BuiltInFunction.createfile)
 global_symbol_table.set("writefile", BuiltInFunction.writefile)
 global_symbol_table.set("emoquote", BuiltInFunction.emoquote)
+global_symbol_table.set("version", BuiltInFunction.version)
 
 def run(fn, text):
     # Generate tokens
