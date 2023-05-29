@@ -11,6 +11,9 @@ import random
 DIGITS = '0123456789'
 LETTERS = string.ascii_letters
 LETTERS_DIGITS = LETTERS + DIGITS
+DAWN_PATH = os.getcwd() + "/"
+NAME_OF_LIBS_FOLDER = "dawnLibs"
+DAWN_LIBS_ABS_PATH = DAWN_PATH + NAME_OF_LIBS_FOLDER + "/"
 
 # ERRORS
 
@@ -1920,6 +1923,32 @@ def run(fn, text):
     result = interpreter.visit(ast.node, context)
 
     return result.value, result.error
+
+# Pass in the data of the script (not directory)
+# The name input is so you know where you got the error from
+# This doesn't do anything extra right now but in the future it might
+def runExternalScript(data, name):
+    print(data)
+    result, error = run("<" + name + ">", data)
+
+    if error:
+        print(error.as_string())
+    elif result:
+        print(repr(result))
+
+# This will automatically detect the .dwn (maybe eventually .py files so you can do more powerful things easier?)
+# in the dawnLibs directory and will run them as if they were copied and pasted into the code
+# *NOTE* This will not work if the file is in a directory of a directory
+# loading a file this way may actually be an issue because variables of the same name will be overwritten
+# a kind of protected variable type should fix this
+def loadImplicitImports():
+    files = os.listdir(DAWN_LIBS_ABS_PATH)
+    for fileName in files:
+        file = open(DAWN_LIBS_ABS_PATH + fileName, "r")
+        runExternalScript(str(file.read()), NAME_OF_LIBS_FOLDER + "/" + fileName)
+
+
+loadImplicitImports()
 
 while True:
     command = input('DawnLang > ')
