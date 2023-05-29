@@ -11,6 +11,7 @@ import random
 DIGITS = '0123456789'
 LETTERS = string.ascii_letters
 LETTERS_DIGITS = LETTERS + DIGITS
+
 DAWN_PATH = os.getcwd() + "/"
 NAME_OF_LIBS_FOLDER = "dawnLibs"
 DAWN_LIBS_ABS_PATH = DAWN_PATH + NAME_OF_LIBS_FOLDER + "/"
@@ -110,6 +111,7 @@ TT_PLUS = 'PLUS'
 TT_MINUS = 'MINUS'
 TT_MUL = 'MUL'
 TT_DIV = 'DIV'
+TT_COMMENT = "COMMENT"
 TT_POW = 'POW'
 TT_EQ = 'EQ'
 TT_LPAREN = 'LPAREN'
@@ -200,6 +202,10 @@ class Lexer:
             elif self.current_char == '*':
                 tokens.append(Token(TT_MUL, pos_start=self.pos))
                 self.advance()
+            elif self.current_char == '#':
+                # Ignore rest of line
+                while(self.current_char != "\n" and self.current_char != None):
+                    self.advance()
             elif self.current_char == '/':
                 tokens.append(Token(TT_DIV, pos_start=self.pos))
                 self.advance()
@@ -1907,6 +1913,10 @@ def run(fn, text):
     # Generate tokens
     lexer = Lexer(fn, text)
     tokens, error = lexer.make_tokens()
+
+    # If there are not tokens in the file then dont cause error
+    if(str(tokens[0]) == str(TT_EOF)):
+        return None, ""
     if error:
         return None, error
 
@@ -1941,11 +1951,14 @@ def runExternalScript(data, name):
 # *NOTE* This will not work if the file is in a directory of a directory
 # loading a file this way may actually be an issue because variables of the same name will be overwritten
 # a kind of protected variable type should fix this
+# Also note that libraries that use eachother will only maybe work but you will first get probably a few errors since it runs twice to define everything
 def loadImplicitImports():
-    files = os.listdir(DAWN_LIBS_ABS_PATH)
-    for fileName in files:
-        file = open(DAWN_LIBS_ABS_PATH + fileName, "r")
-        runExternalScript(str(file.read()), NAME_OF_LIBS_FOLDER + "/" + fileName)
+    # Run through all the libs twice so that libs that rely on eachother have a chance of working
+    for i in range(2):
+        files = os.listdir(DAWN_LIBS_ABS_PATH)
+        for fileName in files:
+            file = open(DAWN_LIBS_ABS_PATH + fileName, "r")
+            runExternalScript(str(file.read()), NAME_OF_LIBS_FOLDER + "/" + fileName)
 
 
 loadImplicitImports()
