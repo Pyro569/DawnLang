@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['src/DawnLang.py', 'src/strings_with_arrows.py'],
+    ['src\\DawnLang.py', 'src\\strings_with_arrows.py'],
     pathex=[],
     binaries=[],
     datas=[],

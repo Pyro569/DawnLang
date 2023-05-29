@@ -1547,6 +1547,24 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.empty)
     execute_random.arg_names = ["low", "high"]
 
+    def execute_runpython(self, exec_ctx):
+        os.system('python3')
+        print((""),end="\r")
+        return RTResult().success(Number.empty)
+    execute_runpython.arg_names = []
+
+    def execute_shutdown(self, exec_ctx):
+        os.system('shutdown /s /t 0' if os.name == 'nt' else 'shutdown')
+        print((""),end="\r")
+        return RTResult().success(Number.empty)
+    execute_shutdown.arg_names = []
+    
+    def execute_reboot(self, exec_ctx):
+        os.system('shutdown /r /t 0' if os.name == 'nt' else 'reboot')
+        print((""),end="\r")
+        return RTResult().success(Number.empty)
+    execute_reboot.arg_names = []
+
 
 BuiltInFunction.write = BuiltInFunction("write")
 BuiltInFunction.writeret = BuiltInFunction("writeret")
@@ -1564,6 +1582,9 @@ BuiltInFunction.convertint = BuiltInFunction("convertint")
 BuiltInFunction.stop = BuiltInFunction("stop")
 BuiltInFunction.shellrun = BuiltInFunction("shellrun")
 BuiltInFunction.random = BuiltInFunction("random")
+BuiltInFunction.runpython = BuiltInFunction("runpython")
+BuiltInFunction.shutdown = BuiltInFunction("shutdown")
+BuiltInFunction.reboot = BuiltInFunction("reboot")
 # CONTEXT
 
 
@@ -1840,7 +1861,9 @@ global_symbol_table.set("convertint", BuiltInFunction.convertint)
 global_symbol_table.set("stop", BuiltInFunction.stop)
 global_symbol_table.set("shellrun", BuiltInFunction.shellrun)
 global_symbol_table.set("random", BuiltInFunction.random)
-
+global_symbol_table.set("runpython", BuiltInFunction.runpython)
+global_symbol_table.set("reboot", BuiltInFunction.reboot)
+global_symbol_table.set("shutdown", BuiltInFunction.shutdown)
 
 def run(fn, text):
     # Generate tokens
