@@ -11,5 +11,3 @@ console operations:
 
 variable initilization:
     VAR a = 10
-    String b = "DawnLang"    
-

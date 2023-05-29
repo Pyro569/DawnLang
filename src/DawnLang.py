@@ -1565,6 +1565,28 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.empty)
     execute_reboot.arg_names = []
 
+    def execute_createfile(self, exec_ctx):
+        path = exec_ctx.symbol_table.get("path")
+        f = open(str(path), "x")
+        print(("Created file at " + str(path)),end="\r")
+        return RTResult().success(Number.empty)
+    execute_createfile.arg_names = ["path"]
+
+    def execute_writefile(self, exec_ctx):
+        path = exec_ctx.symbol_table.get("path")
+        content = exec_ctx.symbol_table.get("content")
+        f = open(str(path), "a")
+        f.write(str(content))
+        print(("Wrote to file at " + str(path)),end="\r")
+        return RTResult().success(Number.empty)
+    execute_writefile.arg_names = ["path", "content"]
+
+    def execute_emoquote(self, exec_ctx):
+        emoquote = ['"The more I try to explain myself, the less I understand myself."', '"I hid my deepest feelings so well I forgot where I placed them."', '"Feel, he told himself, feel, feel, feel. Even if what you feel is pain, only let yourself feel."', '"And the rain will kill us all, throw ourselves against the wall, but no else can see the preservation of the martyr in me"', '"You sold me out to save yourself, and I won\'t listen to your shame, you ran away, you\'re all the same, angels lie to keep control"', '"Undo these chains my friend, I\'ll show you the rage I\'ve hidden, perish the sacrament, swallow, but nothing\'s forgiven, You and I can\'t decide which of us was taken for granted"', '"I\'ll never kill myself to save my soul, I was gone, but how was I to know? I didn\'t come this far to sink so low, I\'m finally holding on to letting go"', '"I stare at accidents in a sick attempt to feel at all."', '"How do I get home? Everything revolves around me, If I can\'t find myself?"']
+        quote = random.randint(0, len(emoquote)-1)
+        print((emoquote[quote]),end="\r")
+        return RTResult().success(Number.empty)
+    execute_emoquote.arg_names = []
 
 BuiltInFunction.write = BuiltInFunction("write")
 BuiltInFunction.writeret = BuiltInFunction("writeret")
@@ -1585,6 +1607,9 @@ BuiltInFunction.random = BuiltInFunction("random")
 BuiltInFunction.runpython = BuiltInFunction("runpython")
 BuiltInFunction.shutdown = BuiltInFunction("shutdown")
 BuiltInFunction.reboot = BuiltInFunction("reboot")
+BuiltInFunction.createfile = BuiltInFunction("createfile")
+BuiltInFunction.writefile = BuiltInFunction("writefile")
+BuiltInFunction.emoquote = BuiltInFunction("emoquote")
 # CONTEXT
 
 
@@ -1864,6 +1889,9 @@ global_symbol_table.set("random", BuiltInFunction.random)
 global_symbol_table.set("runpython", BuiltInFunction.runpython)
 global_symbol_table.set("reboot", BuiltInFunction.reboot)
 global_symbol_table.set("shutdown", BuiltInFunction.shutdown)
+global_symbol_table.set("createfile", BuiltInFunction.createfile)
+global_symbol_table.set("writefile", BuiltInFunction.writefile)
+global_symbol_table.set("emoquote", BuiltInFunction.emoquote)
 
 def run(fn, text):
     # Generate tokens
