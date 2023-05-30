@@ -1329,10 +1329,10 @@ class List(Value):
     copy.set_context(self.context)
     return copy
 
-def __str__(self):
+  def __str__(self):
     return f'{", ".join([str(x) for x in self.elements])}'
 
-def __repr__(self):
+  def __repr__(self):
     return f'[{", ".join([str(x) for x in self.elements])}]'
 
 class BaseFunction(Value):
