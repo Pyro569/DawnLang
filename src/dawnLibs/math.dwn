@@ -1,1 +1,2 @@
-FUNCTION add(a, b) -> a + b
+FUNCTION add(a, b) -> a + b;
+FUNCTION sub(a, b) -> a - b;
