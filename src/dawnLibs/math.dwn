@@ -3,3 +3,5 @@ FUNCTION subtract(a, b) -> a - b;
 FUNCTION multiply(a, b) -> a * b;
 FUNCTION divide(a, b) -> a / b;
 FUNCTION issqrt(a, b) -> IF a * a == b DO "yes" ELSE "no";
+FUNCTION iseven(a) -> IF a % 2 == 0 DO "yes" ELSE "no"
+FUNCTION isodd(a) -> IF a % 2 == 1 DO "yes" ELSE "no"

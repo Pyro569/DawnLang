@@ -1640,7 +1640,8 @@ class BuiltInFunction(BaseFunction):
 
     def execute_clear(self, exec_ctx):
         os.system('cls' if os.name == 'nt' else 'clear')
-        return RTResult().success(Number.null)
+        print((""), end="\r")
+        return RTResult().success(Number.empty)
     execute_clear.arg_names = []
 
     def execute_isnumber(self, exec_ctx):
