@@ -5,6 +5,7 @@ import os
 import math
 import sys
 import random
+import urllib.request
 
 # CONSTANTS
 
@@ -1602,6 +1603,15 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.empty)
     execute_version.arg_names = []
 
+    def execute_download(self, exec_ctx):
+        url = exec_ctx.symbol_table.get("url")
+        path = exec_ctx.symbol_table.get("path")
+        urllib.request.urlretrieve(str(url), str(path))
+        print(("Successfully downloaded file from " + str(url) + "at " + str(path)), end="\r")
+        return RTResult().success(Number.empty)
+    execute_download.arg_names = ["url", "path"]
+
+
 BuiltInFunction.write = BuiltInFunction("write")
 BuiltInFunction.writeret = BuiltInFunction("writeret")
 BuiltInFunction.input = BuiltInFunction("input")
@@ -1625,6 +1635,7 @@ BuiltInFunction.createfile = BuiltInFunction("createfile")
 BuiltInFunction.writefile = BuiltInFunction("writefile")
 BuiltInFunction.emoquote = BuiltInFunction("emoquote")
 BuiltInFunction.version = BuiltInFunction("version")
+BuiltInFunction.download = BuiltInFunction("download")
 # CONTEXT
 
 
@@ -1908,6 +1919,7 @@ global_symbol_table.set("createfile", BuiltInFunction.createfile)
 global_symbol_table.set("writefile", BuiltInFunction.writefile)
 global_symbol_table.set("emoquote", BuiltInFunction.emoquote)
 global_symbol_table.set("version", BuiltInFunction.version)
+global_symbol_table.set("download", BuiltInFunction.download)
 
 def run(fn, text):
     # Generate tokens
