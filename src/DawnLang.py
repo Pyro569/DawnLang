@@ -1958,13 +1958,10 @@ def run(fn, text):
 # The name input is so you know where you got the error from
 # This doesn't do anything extra right now but in the future it might
 def runExternalScript(data, name):
-    print(data)
     result, error = run("<" + name + ">", data)
 
     if error:
         print(error.as_string())
-    elif result:
-        print(repr(result))
 
 # This will automatically detect the .dwn (maybe eventually .py files so you can do more powerful things easier?)
 # in the dawnLibs directory and will run them as if they were copied and pasted into the code
