@@ -1,3 +1,5 @@
+BUILT-IN FUNCTIONS
+
 #comment
 write(string)
 writeret(value)
@@ -26,3 +28,10 @@ writefile("path", "content")
 version()
 shellrun("args")
 loadstd()
+
+MATH.DWN LIBRARY
+add(a, b)
+subtract(a, b)
+multiply(a, b)
+divide(a, b)
+issqrt(a, b)
