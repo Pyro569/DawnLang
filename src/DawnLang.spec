@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['src/DawnLang.py', 'src/strings_with_arrows.py'],
+    ['DawnLang.py', 'strings_with_arrows.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -25,6 +25,7 @@ exe = EXE(
     pyz,
     a.scripts,
     a.binaries,
+    Tree("./src/dawnLibs", "./src/dawnLibs"),
     a.zipfiles,
     a.datas,
     [],
