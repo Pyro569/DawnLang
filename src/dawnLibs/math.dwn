@@ -1,8 +1,5 @@
 FUNCTION add(a, b) -> a + b;
 FUNCTION subtract(a, b) -> a - b;
-
 FUNCTION multiply(a, b) -> a * b;
 FUNCTION divide(a, b) -> a / b;
-
-FUNCTION sqrt(a) -> a ^ 0.5;
-FUNCTION sin(a) -> a ^ 0.5;
+FUNCTION issqrt(a, b) -> IF a * a == b DO "yes" ELSE "no";
