@@ -112,6 +112,7 @@ TT_PLUS = 'PLUS'
 TT_MINUS = 'MINUS'
 TT_MUL = 'MUL'
 TT_DIV = 'DIV'
+TT_MOD = 'MOD'
 TT_COMMENT = "COMMENT"
 TT_POW = 'POW'
 TT_EQ = 'EQ'
@@ -214,6 +215,9 @@ class Lexer:
                     self.advance()
             elif self.current_char == '/':
                 tokens.append(Token(TT_DIV, pos_start=self.pos))
+                self.advance()
+            elif self.current_char == '%':
+                tokens.append(Token(TT_MOD, pos_start=self.pos))
                 self.advance()
             elif self.current_char == '^':
                 tokens.append(Token(TT_POW, pos_start=self.pos))
@@ -558,7 +562,7 @@ class Parser:
         if not res.error and self.current_tok.type != TT_EOF:
             return res.failure(InvalidSyntaxError(
                 self.current_tok.pos_start, self.current_tok.pos_end,
-                "Expected '+', '-', '*', '/', '^', '==', '!=', '<', '>', <=', '>=', 'AND' or 'OR'"
+                "Expected '+', '-', '*', '/', '%', '^', '==', '!=', '<', '>', <=', '>=', 'AND' or 'OR'"
             ))
         return res
 
@@ -982,7 +986,7 @@ class Parser:
         return self.power()
 
     def term(self):
-        return self.bin_op(self.factor, (TT_MUL, TT_DIV))
+        return self.bin_op(self.factor, (TT_MUL, TT_DIV, TT_MOD))
 
     def arith_expr(self):
         return self.bin_op(self.term, (TT_PLUS, TT_MINUS))
@@ -1349,6 +1353,17 @@ class Number(Value):
                 )
 
             return Number(self.value / other.value).set_context(self.context), None
+
+    def mod_by(self, other):
+        if isinstance(other, Number):
+            if other.value == 0:
+                return None, RTError(
+                    other.pos_start, other.pos_end,
+                    'Division by zero',
+                    self.context
+                )
+
+            return Number(self.value % other.value).set_context(self.context), None
 
     def powed_by(self, other):
         if isinstance(other, Number):
@@ -1912,6 +1927,8 @@ class Interpreter:
             result, error = left.multed_by(right)
         elif node.op_tok.type == TT_DIV:
             result, error = left.dived_by(right)
+        elif node.op_tok.type == TT_MOD:
+            result, error = left.mod_by(right)
         elif node.op_tok.type == TT_POW:
             result, error = left.powed_by(right)
         elif node.op_tok.type == TT_EE:
