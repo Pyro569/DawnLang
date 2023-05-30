@@ -1,2 +1,4 @@
 FUNCTION add(a, b) -> a + b;
-FUNCTION sub(a, b) -> a - b;
+FUNCTION subtract(a, b) -> a - b;
+FUNCTION multiply(a, b) -> a * b;
+FUNCTION divide(a, b) -> a / b;
