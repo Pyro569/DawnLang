@@ -28,6 +28,7 @@ writefile("path", "content")
 version()
 shellrun("args")
 loadstd()
+loadlibrary("library")
 
 MATH.DWN LIBRARY
 add(a, b)

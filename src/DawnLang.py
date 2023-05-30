@@ -1794,6 +1794,13 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.empty)
     execute_loadstd.arg_names = []
 
+    def execute_loadlibrary(self, exec_ctx):
+        library = exec_ctx.symbol_table.get("library")
+        loadLibrary(str(library))
+        print("Successfully loaded library " + str(library), end="\r")
+        return RTResult().success(Number.empty)
+    execute_loadlibrary.arg_names = ["library"]
+
 
 BuiltInFunction.write = BuiltInFunction("write")
 BuiltInFunction.writeret = BuiltInFunction("writeret")
@@ -1820,6 +1827,7 @@ BuiltInFunction.emoquote = BuiltInFunction("emoquote")
 BuiltInFunction.version = BuiltInFunction("version")
 BuiltInFunction.download = BuiltInFunction("download")
 BuiltInFunction.loadstd = BuiltInFunction("loadstd")
+BuiltInFunction.loadlibrary = BuiltInFunction("loadlibrary")
 # CONTEXT
 
 
@@ -2108,6 +2116,7 @@ global_symbol_table.set("emoquote", BuiltInFunction.emoquote)
 global_symbol_table.set("version", BuiltInFunction.version)
 global_symbol_table.set("download", BuiltInFunction.download)
 global_symbol_table.set("loadstd", BuiltInFunction.loadstd)
+global_symbol_table.set("loadlibrary", BuiltInFunction.loadlibrary)
 
 def run(fn, text):
     # Generate tokens
@@ -2156,6 +2165,11 @@ def loadImplicitImports():
         for fileName in files:
             file = open(DAWN_LIBS_ABS_PATH + fileName, "r")
             runExternalScript(str(file.read()), NAME_OF_LIBS_FOLDER + "/" + fileName)
+
+def loadLibrary(libname):
+    for i in range(2):
+        file = open(DAWN_LIBS_ABS_PATH + libname, "r")
+        runExternalScript(str(file.read()), NAME_OF_LIBS_FOLDER + "/" + libname)
 
 
 while True:
