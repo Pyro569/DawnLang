@@ -17,6 +17,10 @@ DAWN_PATH = os.getcwd() + "/"
 NAME_OF_LIBS_FOLDER = "dawnLibs"
 DAWN_LIBS_ABS_PATH = DAWN_PATH + NAME_OF_LIBS_FOLDER + "/"
 
+# Args that only decide whether to print or not
+# Index 0 is if printing is enabled
+argsProgram = [True]
+
 # ERRORS
 
 
@@ -136,6 +140,7 @@ KEYWORDS = [
     'NOT',
     'IF',
     'DO',
+    'END_DO',
     'ELIF',
     'ELSE',
     'FOR',
@@ -1437,7 +1442,9 @@ class BuiltInFunction(BaseFunction):
         return f"<function {self.name}> "
     
     def execute_write(self, exec_ctx):
-        print(str(exec_ctx.symbol_table.get('value')),end="\r")
+        # If printing enabled
+        if(argsProgram[0]):
+            print(str(exec_ctx.symbol_table.get('value')),end="\r")
         return RTResult().success(Number.empty)
     execute_write.arg_names = ["value"]
 
@@ -1958,19 +1965,26 @@ def run(fn, text):
 # The name input is so you know where you got the error from
 # This doesn't do anything extra right now but in the future it might
 def runExternalScript(data, name):
-    print(data)
+    # save args so we can revert
+    previousArgs = argsProgram.copy()
+
+    # Disable printing
+    argsProgram[0] = False
     result, error = run("<" + name + ">", data)
 
     if error:
         print(error.as_string())
     elif result:
-        print(repr(result))
+        if(argsProgram[0]):
+            print(repr(result))
+
+    # Rollback args
+    for i in range(len(previousArgs)):
+        argsProgram[i] = previousArgs[i]
 
 # This will automatically detect the .dwn (maybe eventually .py files so you can do more powerful things easier?)
 # in the dawnLibs directory and will run them as if they were copied and pasted into the code
 # *NOTE* This will not work if the file is in a directory of a directory
-# loading a file this way may actually be an issue because variables of the same name will be overwritten
-# a kind of protected variable type should fix this
 # Also note that libraries that use eachother will only maybe work but you will first get probably a few errors since it runs twice to define everything
 def loadImplicitImports():
     # Run through all the libs twice so that libs that rely on eachother have a chance of working
@@ -1979,7 +1993,7 @@ def loadImplicitImports():
         for fileName in files:
             file = open(DAWN_LIBS_ABS_PATH + fileName, "r")
             runExternalScript(str(file.read()), NAME_OF_LIBS_FOLDER + "/" + fileName)
-
+loadImplicitImports()
 
 while True:
     command = input('DawnLang > ')
@@ -1989,3 +2003,4 @@ while True:
         print(error.as_string())
     elif result:
         print(repr(result))
+    input('DawnLang > ')
