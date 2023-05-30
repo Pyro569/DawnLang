@@ -1,3 +1,4 @@
+#comment
 write(string)
 writeret(value)
 isstring(string)
@@ -24,3 +25,4 @@ createfile("path")
 writefile("path", "content")
 version()
 shellrun("args")
+loadstd()

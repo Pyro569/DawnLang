@@ -1611,6 +1611,12 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.empty)
     execute_download.arg_names = ["url", "path"]
 
+    def execute_loadstd(self, exec_ctx):
+        loadImplicitImports()
+        print("Successfully imported standard library",end="\r")
+        return RTResult().success(Number.empty)
+    execute_loadstd.arg_names = []
+
 
 BuiltInFunction.write = BuiltInFunction("write")
 BuiltInFunction.writeret = BuiltInFunction("writeret")
@@ -1636,6 +1642,7 @@ BuiltInFunction.writefile = BuiltInFunction("writefile")
 BuiltInFunction.emoquote = BuiltInFunction("emoquote")
 BuiltInFunction.version = BuiltInFunction("version")
 BuiltInFunction.download = BuiltInFunction("download")
+BuiltInFunction.loadstd = BuiltInFunction("loadstd")
 # CONTEXT
 
 
@@ -1920,6 +1927,7 @@ global_symbol_table.set("writefile", BuiltInFunction.writefile)
 global_symbol_table.set("emoquote", BuiltInFunction.emoquote)
 global_symbol_table.set("version", BuiltInFunction.version)
 global_symbol_table.set("download", BuiltInFunction.download)
+global_symbol_table.set("loadstd", BuiltInFunction.loadstd)
 
 def run(fn, text):
     # Generate tokens
@@ -1972,8 +1980,6 @@ def loadImplicitImports():
             file = open(DAWN_LIBS_ABS_PATH + fileName, "r")
             runExternalScript(str(file.read()), NAME_OF_LIBS_FOLDER + "/" + fileName)
 
-
-loadImplicitImports()
 
 while True:
     command = input('DawnLang > ')
