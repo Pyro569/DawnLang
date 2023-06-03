@@ -1802,6 +1802,13 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.empty)
     execute_loadlibrary.arg_names = ["library"]
 
+    def execute_runscript(self, exec_ctx):
+        script = exec_ctx.symbol_table.get("script")
+        loadScript(str(script))
+        print("Successfully ran script " + str(script), end="\r")
+        return RTResult().success(Number.empty)
+    execute_runscript.arg_names = ["script"]
+
 
 BuiltInFunction.write = BuiltInFunction("write")
 BuiltInFunction.writeret = BuiltInFunction("writeret")
@@ -1829,6 +1836,7 @@ BuiltInFunction.version = BuiltInFunction("version")
 BuiltInFunction.download = BuiltInFunction("download")
 BuiltInFunction.loadstd = BuiltInFunction("loadstd")
 BuiltInFunction.loadlibrary = BuiltInFunction("loadlibrary")
+BuiltInFunction.runscript = BuiltInFunction("runscript")
 # CONTEXT
 
 
@@ -2118,6 +2126,7 @@ global_symbol_table.set("version", BuiltInFunction.version)
 global_symbol_table.set("download", BuiltInFunction.download)
 global_symbol_table.set("loadstd", BuiltInFunction.loadstd)
 global_symbol_table.set("loadlibrary", BuiltInFunction.loadlibrary)
+global_symbol_table.set("runscript", BuiltInFunction.runscript)
 
 def run(fn, text):
     # Generate tokens
@@ -2153,6 +2162,14 @@ def runExternalScript(data, name):
     if error:
         print(error.as_string())
 
+def runExternalScriptOutput(data, name):
+    result, error = run("<" + name + ">", data)
+
+    if error:
+        print(error.as_string())
+    else:
+        print(result)
+
 # This will automatically detect the .dwn (maybe eventually .py files so you can do more powerful things easier?)
 # in the dawnLibs directory and will run them as if they were copied and pasted into the code
 # *NOTE* This will not work if the file is in a directory of a directory
@@ -2171,6 +2188,11 @@ def loadLibrary(libname):
     for i in range(2):
         file = open(DAWN_LIBS_ABS_PATH + libname, "r")
         runExternalScript(str(file.read()), NAME_OF_LIBS_FOLDER + "/" + libname)
+
+def loadScript(scriptname):
+    for i in range(2):
+        file = open(DAWN_PATH + scriptname, "r")
+        runExternalScriptOutput(str(file.read()), scriptname + "/")
 
 
 while True:
