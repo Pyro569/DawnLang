@@ -1700,7 +1700,7 @@ class BuiltInFunction(BaseFunction):
         return f"<function {self.name}> "
     
     def execute_write(self, exec_ctx):
-        print(str(exec_ctx.symbol_table.get('value')),end="\r")
+        print(str(exec_ctx.symbol_table.get('value')),end="\n")
         return RTResult().success(Number.empty)
     execute_write.arg_names = ["value"]
 
@@ -1888,13 +1888,40 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.empty)
     execute_loadlibrary.arg_names = ["library"]
 
-    def execute_runscript(self, exec_ctx):
-        script = exec_ctx.symbol_table.get("script")
-        loadScript(str(script))
-        print("Successfully ran script " + str(script), end="\r")
-        return RTResult().success(Number.empty)
-    execute_runscript.arg_names = ["script"]
+    def execute_run(self, exec_ctx):
+        fn = exec_ctx.symbol_table.get("fn")
 
+        if not isinstance(fn, String):
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                "Argument must be string",
+                exec_ctx
+            ))
+
+        fn = fn.value
+
+        try:
+            with open(fn, "r") as f:
+                script = f.read()
+        except Exception as e:
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                f"Failed to load script \"{fn}\"\n" + str(e),
+                exec_ctx
+            ))
+
+        _, error = run(fn, script)
+
+        if error:
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                f"Failed to finish executing script \"{fn}\"\n" + error.as_string(),
+                exec_ctx
+            ))
+
+        print("", end="\r")
+        return RTResult().success(Number.empty)
+    execute_run.arg_names = ["fn"]
 
 BuiltInFunction.write = BuiltInFunction("write")
 BuiltInFunction.writeret = BuiltInFunction("writeret")
@@ -1922,7 +1949,7 @@ BuiltInFunction.version = BuiltInFunction("version")
 BuiltInFunction.download = BuiltInFunction("download")
 BuiltInFunction.loadstd = BuiltInFunction("loadstd")
 BuiltInFunction.loadlibrary = BuiltInFunction("loadlibrary")
-BuiltInFunction.runscript = BuiltInFunction("runscript")
+BuiltInFunction.run = BuiltInFunction("run")
 # CONTEXT
 
 
@@ -2245,7 +2272,7 @@ global_symbol_table.set("version", BuiltInFunction.version)
 global_symbol_table.set("download", BuiltInFunction.download)
 global_symbol_table.set("loadstd", BuiltInFunction.loadstd)
 global_symbol_table.set("loadlibrary", BuiltInFunction.loadlibrary)
-global_symbol_table.set("runscript", BuiltInFunction.runscript)
+global_symbol_table.set("run", BuiltInFunction.run)
 
 def run(fn, text):
     # Generate tokens
