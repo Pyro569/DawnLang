@@ -1,7 +1,7 @@
-FUNCTION add(a, b) -> a + b;
-FUNCTION subtract(a, b) -> a - b;
-FUNCTION multiply(a, b) -> a * b;
-FUNCTION divide(a, b) -> a / b;
-FUNCTION issqrt(a, b) -> IF a * a == b DO "yes" ELSE "no";
-FUNCTION iseven(a) -> IF a % 2 == 0 DO "yes" ELSE "no"
-FUNCTION isodd(a) -> IF a % 2 == 1 DO "yes" ELSE "no"
+function add(a, b) -> a + b;
+function subtract(a, b) -> a - b;
+function multiply(a, b) -> a * b;
+function divide(a, b) -> a / b;
+function issqrt(a, b) -> if a * a == b do "yes" else "no";
+function iseven(a) -> if a % 2 == 0 do "yes" else "no"
+function isodd(a) -> if a % 2 == 1 do "yes" else "no"
