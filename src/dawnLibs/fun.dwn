@@ -1,3 +1,3 @@
 function fizzbuzz(a) -> for i = 1 to a do;
-if i % 15 == 0 do write("FizzBuzz") elif i % 5 == 0 do write("Buzz") elif i % 3 == 0 do write("Fizz") else write(i);
-end;
+    if i % 15 == 0 do write("FizzBuzz") elif i % 5 == 0 do write("Buzz") elif i % 3 == 0 do write("Fizz") else write(i);
+    end;

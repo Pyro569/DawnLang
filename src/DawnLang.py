@@ -1855,6 +1855,14 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.empty)
     execute_writefile.arg_names = ["path", "content"]
 
+    def execute_boilerplate(self, exec_ctx):
+        path = exec_ctx.symbol_table.get("path")
+        f = open(str(path), "a")
+        f.write(str('''function hello_world() -> write("Hello, World!");\n\nhello_world();'''))
+        print(("Created boilerplate file at " + str(path)), end="\r")
+        return RTResult().success(Number.empty)
+    execute_boilerplate.arg_names = ["path"]
+
     def execute_emoquote(self, exec_ctx):
         emoquote = ['"The more I try to explain myself, the less I understand myself."', '"I hid my deepest feelings so well I forgot where I placed them."', '"Feel, he told himself, feel, feel, feel. Even if what you feel is pain, only let yourself feel."', '"And the rain will kill us all, throw ourselves against the wall, but no else can see the preservation of the martyr in me"', '"You sold me out to save yourself, and I won\'t listen to your shame, you ran away, you\'re all the same, angels lie to keep control"', '"Undo these chains my friend, I\'ll show you the rage I\'ve hidden, perish the sacrament, swallow, but nothing\'s forgiven, You and I can\'t decide which of us was taken for granted"', '"I\'ll never kill myself to save my soul, I was gone, but how was I to know? I didn\'t come this far to sink so low, I\'m finally holding on to letting go"', '"I stare at accidents in a sick attempt to feel at all."', '"How do I get home? Everything revolves around me, If I can\'t find myself?"']
         quote = random.randint(0, len(emoquote)-1)
@@ -1964,6 +1972,7 @@ BuiltInFunction.loadstd = BuiltInFunction("loadstd")
 BuiltInFunction.loadlibrary = BuiltInFunction("loadlibrary")
 BuiltInFunction.run = BuiltInFunction("run")
 BuiltInFunction.len = BuiltInFunction("len")
+BuiltInFunction.boilerplate = BuiltInFunction("boilerplate")
 # CONTEXT
 
 
@@ -2288,6 +2297,7 @@ global_symbol_table.set("loadstd", BuiltInFunction.loadstd)
 global_symbol_table.set("loadlibrary", BuiltInFunction.loadlibrary)
 global_symbol_table.set("run", BuiltInFunction.run)
 global_symbol_table.set("len", BuiltInFunction.len)
+global_symbol_table.set("boilerplate", BuiltInFunction.boilerplate)
 
 def run(fn, text):
     # Generate tokens
