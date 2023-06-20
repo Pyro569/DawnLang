@@ -1,6 +1,7 @@
 BUILT-IN FUNCTIONS
 
 #comment
+//comment
 write(string)
 writeret(value)
 isstring(string)
