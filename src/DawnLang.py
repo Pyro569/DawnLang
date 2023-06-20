@@ -1871,7 +1871,7 @@ class BuiltInFunction(BaseFunction):
     execute_emoquote.arg_names = []
 
     def execute_version(self, exec_ctx):
-        print(("DawnLang V0.5"),end="\r")
+        print(("DawnLang V1.0"),end="\r")
         return RTResult().success(Number.empty)
     execute_version.arg_names = []
 
