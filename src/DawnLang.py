@@ -1888,6 +1888,19 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.empty)
     execute_loadlibrary.arg_names = ["library"]
 
+    def execute_len(self, exec_ctx):
+        list_ = exec_ctx.symbol_table.get("list")
+
+        if not isinstance(list_, List):
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                "Argument must be list",
+                exec_ctx
+            ))
+
+        return RTResult().success(Number(len(list_.elements)))
+    execute_len.arg_names = ["list"]
+
     def execute_run(self, exec_ctx):
         fn = exec_ctx.symbol_table.get("fn")
 
@@ -1950,6 +1963,7 @@ BuiltInFunction.download = BuiltInFunction("download")
 BuiltInFunction.loadstd = BuiltInFunction("loadstd")
 BuiltInFunction.loadlibrary = BuiltInFunction("loadlibrary")
 BuiltInFunction.run = BuiltInFunction("run")
+BuiltInFunction.len = BuiltInFunction("len")
 # CONTEXT
 
 
@@ -2273,6 +2287,7 @@ global_symbol_table.set("download", BuiltInFunction.download)
 global_symbol_table.set("loadstd", BuiltInFunction.loadstd)
 global_symbol_table.set("loadlibrary", BuiltInFunction.loadlibrary)
 global_symbol_table.set("run", BuiltInFunction.run)
+global_symbol_table.set("len", BuiltInFunction.len)
 
 def run(fn, text):
     # Generate tokens
