@@ -6,6 +6,7 @@ import math
 import sys
 import random
 import urllib.request
+import zipfile
 
 # CONSTANTS
 
@@ -1944,6 +1945,15 @@ class BuiltInFunction(BaseFunction):
 
     execute_loadstd.arg_names = []
 
+    def execute_extract(self, exec_ctx):
+        zippath = exec_ctx.symbol_table.get("zippath")
+        path = exec_ctx.symbol_table.get("path")
+        with zipfile.ZipFile(str(zippath), 'r') as zip:
+            zip.extractall(str(path))
+        if Error: return RTResult().success(Number.empty)
+        return RTResult().success(Number.empty)
+    execute_extract.arg_names = ["zippath", "path"]
+
     def execute_loadlibrary(self, exec_ctx):
         library = exec_ctx.symbol_table.get("library")
         loadLibrary(str(library))
@@ -2032,7 +2042,7 @@ BuiltInFunction.loadlibrary = BuiltInFunction("loadlibrary")
 BuiltInFunction.run = BuiltInFunction("run")
 BuiltInFunction.len = BuiltInFunction("len")
 BuiltInFunction.boilerplate = BuiltInFunction("boilerplate")
-
+BuiltInFunction.extract = BuiltInFunction("extract")
 
 # CONTEXT
 
@@ -2368,7 +2378,7 @@ global_symbol_table.set("loadlibrary", BuiltInFunction.loadlibrary)
 global_symbol_table.set("run", BuiltInFunction.run)
 global_symbol_table.set("len", BuiltInFunction.len)
 global_symbol_table.set("boilerplate", BuiltInFunction.boilerplate)
-
+global_symbol_table.set("extract", BuiltInFunction.extract)
 
 def run(fn, text):
     # Generate tokens
