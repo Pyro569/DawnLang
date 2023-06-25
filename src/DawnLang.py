@@ -1926,7 +1926,7 @@ class BuiltInFunction(BaseFunction):
     execute_emoquote.arg_names = []
 
     def execute_version(self, exec_ctx):
-        print(("DawnLang V1.0"), end="\r")
+        print(("DawnLang V1.1.0"), end="\r")
         return RTResult().success(Number.empty)
 
     execute_version.arg_names = []
@@ -1956,7 +1956,7 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.empty)
     execute_extract.arg_names = ["zippath", "path"]
 
-    def execute_updatelibs(selfself, exec_ctx):
+    def execute_updatelibs(self, exec_ctx):
         if os.path.exists("./dawnLibs"):
             shutil.rmtree("./dawnLibs")
             os.mkdir("./dawnLibs")
@@ -1973,6 +1973,12 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.empty)
     execute_updatelibs.arg_names = []
 
+    def execute_update(self, exec_ctx):
+        urllib.request.urlretrieve("https://api.github.com/repos/Pyro569/DawnLang/releases/latest", "./DawnLangCurrent.zip")
+        for file_name in os.listdir("./"):
+            if not file_name == "DawnLangCurrent.zip":
+                os.remove("./" + file_name)
+        os.system('Expand-Archive "DawnLangCurrent.zip" "./" || Remove-Item "DawnLangCurrent.zip"' if os.name == 'nt' else 'unzip DawnLangCurrent.zip ./; rm DawnLangCurrent.zip')
 
     def execute_loadlibrary(self, exec_ctx):
         library = exec_ctx.symbol_table.get("library")
