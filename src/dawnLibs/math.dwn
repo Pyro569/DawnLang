@@ -3,6 +3,6 @@ function add(a, b) -> a + b;
 function subtract(a, b) -> a - b;
 function multiply(a, b) -> a * b;
 function divide(a, b) -> a / b;
-function even(a) -> if a%2==0 do write("True") else write("False");
-function odd(a) -> if a%2==1 do write("True") else write("False");
+function even(a) -> if a%2==0 do "True" else "False";
+function odd(a) -> if a%2==1 do "True" else "False";
 function mathver() -> write("Math.dwn Version 1.0");
