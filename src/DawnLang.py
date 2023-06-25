@@ -1979,6 +1979,7 @@ class BuiltInFunction(BaseFunction):
             if not file_name == "DawnLangCurrent.zip":
                 os.remove("./" + file_name)
         os.system('Expand-Archive "DawnLangCurrent.zip" "./" || Remove-Item "DawnLangCurrent.zip"' if os.name == 'nt' else 'unzip DawnLangCurrent.zip ./; rm DawnLangCurrent.zip')
+    execute_update.arg_names = []
 
     def execute_loadlibrary(self, exec_ctx):
         library = exec_ctx.symbol_table.get("library")
@@ -2070,6 +2071,7 @@ BuiltInFunction.len = BuiltInFunction("len")
 BuiltInFunction.boilerplate = BuiltInFunction("boilerplate")
 BuiltInFunction.extract = BuiltInFunction("extract")
 BuiltInFunction.updatelibs = BuiltInFunction("updatelibs")
+BuiltInFunction.update = BuiltInFunction("update")
 
 # CONTEXT
 
@@ -2407,6 +2409,7 @@ global_symbol_table.set("len", BuiltInFunction.len)
 global_symbol_table.set("boilerplate", BuiltInFunction.boilerplate)
 global_symbol_table.set("extract", BuiltInFunction.extract)
 global_symbol_table.set("updatelibs", BuiltInFunction.updatelibs)
+global_symbol_table.set("update", BuiltInFunction.update)
 
 def run(fn, text):
     # Generate tokens
