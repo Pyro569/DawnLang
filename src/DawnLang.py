@@ -1,3 +1,5 @@
+import shutil
+
 from strings_with_arrows import *
 
 import string
@@ -1954,6 +1956,24 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.empty)
     execute_extract.arg_names = ["zippath", "path"]
 
+    def execute_updatelibs(selfself, exec_ctx):
+        if os.path.exists("./dawnLibs"):
+            shutil.rmtree("./dawnLibs")
+            os.mkdir("./dawnLibs")
+        else:
+            os.mkdir("./dawnLibs")
+        urllib.request.urlretrieve("https://github.com/Pyro569/DawnLibs/archive/refs/heads/main.zip", "./dawnLibs.zip")
+        with zipfile.ZipFile("./dawnLibs.zip", 'r') as zip:
+            zip.extractall("./dawnLibs/")
+        for file_name in os.listdir("./dawnLibs/DawnLibs-main"):
+            shutil.move("./dawnLibs/DawnLibs-main/"+file_name, "./dawnLibs")
+        os.rmdir("./dawnLibs/DawnLibs-main/")
+        os.remove("./dawnLibs.zip")
+        if Error: return RTResult().success(Number.empty)
+        return RTResult().success(Number.empty)
+    execute_updatelibs.arg_names = []
+
+
     def execute_loadlibrary(self, exec_ctx):
         library = exec_ctx.symbol_table.get("library")
         loadLibrary(str(library))
@@ -2043,6 +2063,7 @@ BuiltInFunction.run = BuiltInFunction("run")
 BuiltInFunction.len = BuiltInFunction("len")
 BuiltInFunction.boilerplate = BuiltInFunction("boilerplate")
 BuiltInFunction.extract = BuiltInFunction("extract")
+BuiltInFunction.updatelibs = BuiltInFunction("updatelibs")
 
 # CONTEXT
 
@@ -2379,6 +2400,7 @@ global_symbol_table.set("run", BuiltInFunction.run)
 global_symbol_table.set("len", BuiltInFunction.len)
 global_symbol_table.set("boilerplate", BuiltInFunction.boilerplate)
 global_symbol_table.set("extract", BuiltInFunction.extract)
+global_symbol_table.set("updatelibs", BuiltInFunction.updatelibs)
 
 def run(fn, text):
     # Generate tokens

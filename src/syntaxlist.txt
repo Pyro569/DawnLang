@@ -33,6 +33,8 @@ loadstd()
 loadlibrary("library")
 run("path")
 len("list")
+updatelibs()
+extract("path", "path")
 
 MATH.DWN LIBRARY
 add(value, value)
