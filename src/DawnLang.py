@@ -204,7 +204,7 @@ class Lexer:
                 self.advance()
             elif self.current_char in DIGITS:
                 tokens.append(self.make_number())
-            elif self.current_char in ";\n" or self.current_char in "!\n" or self.current_char in "?\n" or self.current_char in "@\n" or self.current_char in "$\n" or self.current_char in ">\n" or self.current_char in "|\n":
+            elif self.current_char in ";\n" or self.current_char in "!\n" or self.current_char in "?\n" or self.current_char in "@\n" or self.current_char in "$\n" or self.current_char in ">\n" or self.current_char in "|\n" or self.current_char in "&\n":
                 tokens.append(Token(TT_NEWLINE, pos_start=self.pos))
                 self.advance()
             elif self.current_char in LETTERS:
