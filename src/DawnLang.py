@@ -219,7 +219,7 @@ class Lexer:
             elif self.current_char == '*':
                 tokens.append(Token(TT_MUL, pos_start=self.pos))
                 self.advance()
-            elif self.current_char == '#' or self.current_char == '/':
+            elif self.current_char == '#' or self.current_char == '/' or self.current_char == '&' or self.current_char == '~':
                 # Ignore rest of line
                 while (self.current_char != "\n" and self.current_char != None):
                     self.advance()
