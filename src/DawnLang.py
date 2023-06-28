@@ -204,7 +204,7 @@ class Lexer:
                 self.advance()
             elif self.current_char in DIGITS:
                 tokens.append(self.make_number())
-            elif self.current_char in ";\n" or self.current_char in "!\n" or self.current_char in "?\n" or self.current_char in "@\n" or self.current_char in "$\n" or self.current_char in ">\n" or self.current_char in "|\n" or self.current_char in "&\n":
+            elif self.current_char in ";\n" or self.current_char in "!\n" or self.current_char in "?\n" or self.current_char in "@\n" or self.current_char in "$\n" or self.current_char in "|\n" or self.current_char in "&\n":
                 tokens.append(Token(TT_NEWLINE, pos_start=self.pos))
                 self.advance()
             elif self.current_char in LETTERS:
@@ -1926,7 +1926,7 @@ class BuiltInFunction(BaseFunction):
     execute_emoquote.arg_names = []
 
     def execute_version(self, exec_ctx):
-        print(("DawnLang V1.1.0"), end="\r")
+        print(("DawnLang V1.2.0"), end="\r")
         return RTResult().success(Number.empty)
 
     execute_version.arg_names = []
