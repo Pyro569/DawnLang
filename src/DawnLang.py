@@ -1981,13 +1981,12 @@ class BuiltInFunction(BaseFunction):
         os.system('Expand-Archive "DawnLangCurrent.zip" "./" || Remove-Item "DawnLangCurrent.zip"' if os.name == 'nt' else 'unzip DawnLangCurrent.zip ./; rm DawnLangCurrent.zip')
     execute_update.arg_names = []
 
-    def execute_loadlibrary(self, exec_ctx):
+    def execute_include(self, exec_ctx):
         library = exec_ctx.symbol_table.get("library")
         loadLibrary(str(library))
         print("Successfully loaded library " + str(library), end="\r")
         return RTResult().success(Number.empty)
-
-    execute_loadlibrary.arg_names = ["library"]
+    execute_include.arg_names = ["library"]
 
     def execute_len(self, exec_ctx):
         list_ = exec_ctx.symbol_table.get("list")
@@ -2065,7 +2064,7 @@ BuiltInFunction.emoquote = BuiltInFunction("emoquote")
 BuiltInFunction.version = BuiltInFunction("version")
 BuiltInFunction.download = BuiltInFunction("download")
 BuiltInFunction.loadstd = BuiltInFunction("loadstd")
-BuiltInFunction.loadlibrary = BuiltInFunction("loadlibrary")
+BuiltInFunction.include = BuiltInFunction("include")
 BuiltInFunction.run = BuiltInFunction("run")
 BuiltInFunction.len = BuiltInFunction("len")
 BuiltInFunction.boilerplate = BuiltInFunction("boilerplate")
@@ -2403,7 +2402,7 @@ global_symbol_table.set("emoquote", BuiltInFunction.emoquote)
 global_symbol_table.set("version", BuiltInFunction.version)
 global_symbol_table.set("download", BuiltInFunction.download)
 global_symbol_table.set("loadstd", BuiltInFunction.loadstd)
-global_symbol_table.set("loadlibrary", BuiltInFunction.loadlibrary)
+global_symbol_table.set("include", BuiltInFunction.include)
 global_symbol_table.set("run", BuiltInFunction.run)
 global_symbol_table.set("len", BuiltInFunction.len)
 global_symbol_table.set("boilerplate", BuiltInFunction.boilerplate)

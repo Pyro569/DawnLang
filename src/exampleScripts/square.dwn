@@ -1,0 +1,6 @@
+include("math.dwn");
+write("Input a number to square");
+var a = inputint();
+var b = a*a;
+write(b);
+run("./exampleScripts/square.dwn");
