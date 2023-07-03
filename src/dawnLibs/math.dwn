@@ -5,5 +5,5 @@ function multiply(a, b) -> a * b;
 function divide(a, b) -> a / b;
 function even(a) -> if a%2==0 do "True" else "False";
 function odd(a) -> if a%2==1 do "True" else "False";
-function mathver() -> write("Math.dwn Version 1.0");
+function mathver() -> "Math.dwn V1.0"
 function square(a) -> a*a;

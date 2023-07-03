@@ -2,6 +2,7 @@ BUILT-IN FUNCTIONS
 
 #comment
 //comment
+~comment
 write(string)
 writeret(value)
 isstring(string)
@@ -48,3 +49,6 @@ sqrt(value)
 
 FUN.DWN LIBRARY
 fizzbuzz(value)
+customfizzbuzz(int, int, int)
+terminalgnome()
+powershell()
