@@ -15,6 +15,7 @@ import zipfile
 DIGITS = '0123456789'
 LETTERS = string.ascii_letters
 LETTERS_DIGITS = LETTERS + DIGITS
+PROTECTED_NAME = ["dawnlang", "input", "std", "var", "string", "list"]
 
 DAWN_PATH = os.getcwd() + "/"
 NAME_OF_LIBS_FOLDER = "dawnLibs"
@@ -154,8 +155,7 @@ KEYWORDS = [
     'end',
     'return',
     'continue',
-    'break',
-    '}'
+    'break'
 ]
 
 
@@ -2328,8 +2328,10 @@ class Interpreter:
         func_value = Function(func_name, body_node, arg_names, node.should_auto_return).set_context(context).set_pos(
             node.pos_start, node.pos_end)
 
-        if node.var_name_tok:
+        if node.var_name_tok != any(PROTECTED_NAME in str(node.var_name_tok) for PROTECTED_NAME in str(node.var_name_tok)):
             context.symbol_table.set(func_name, func_value)
+        else:
+            return "Using protected variable name"
 
         return res.success(func_value)
 
